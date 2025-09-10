@@ -14,12 +14,22 @@ pipeline {
   steps {
     sh '''
       export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
       nvm use 12
       npm install
       npm run build
     '''
   }
+}
+    stage('Build Docker Image') {
+      steps {
+        script {
+          def imageTag = "trend-app:${env.BUILD_ID}"
+          sh "docker build -t ${imageTag} ."
+          sh "docker tag ${imageTag} 123456789012.dkr.ecr.${AWS_REGION}.amazonaws.com/${imageTag}"
+          sh "docker push 123456789012.dkr.ecr.${AWS_REGION}.amazonaws.com/${imageTag}"
+        }
+      }
 }
     }
     stage('Configure Kubeconfig') {
