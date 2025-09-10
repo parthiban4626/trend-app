@@ -11,12 +11,16 @@ pipeline {
       }
     }
     stage('Build React App') {
-      steps {
-        sh '''
-          npm install
-          npm run build
-        '''
-      }
+  steps {
+    sh '''
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      nvm use 12
+      npm install
+      npm run build
+    '''
+  }
+}
     }
     stage('Configure Kubeconfig') {
       steps {
