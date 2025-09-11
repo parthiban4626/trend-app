@@ -47,7 +47,8 @@ pipeline {
         sh '''
           kubectl set image deployment/trend-app-deployment trend-app-container=$DOCKERHUB_REPO:$IMAGE_TAG
           kubectl rollout status deployment/trend-app-deployment
-          kubectl apply -f k8s/service.yaml
+          kubectl apply -f k8s/trend-deployment.yaml
+          kubectl apply -f k8s/trend-service.yaml
         '''
       }
     }
