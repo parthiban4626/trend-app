@@ -1,18 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trend-app-deployment  
+  name: trend-app-deployment
+  namespace: default
 spec:
   selector:
     matchLabels:
-      app: trend-app          
+      app: trend-app
   template:
     metadata:
       labels:
-        app: trend-app      
+        app: trend-app
     spec:
       containers:
-      - name: trend-app-container 
-        image: parthiban46/trend-app:latest
-        ports:
-        - containerPort: 3000
+        - name: trend-app-container
+          image: parthiban46/trend-app:latest
+          ports:
+            - containerPort: 3000
+          resources:                      
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

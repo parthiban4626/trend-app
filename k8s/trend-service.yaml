@@ -1,20 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: trend-app-service     
+  name: trend-app-service
+  namespace: default
 spec:
-  selector:
-    app: trend-app             
-  ports:
-  - protocol: TCP
-    port: 80                 
-    targetPort: 3000           
   type: LoadBalancer
-  resources:
-  requests:
-    memory: "256Mi"
-    cpu: "250m"
-  limits:
-    memory: "512Mi"
-    cpu: "500m"
-
+  selector:
+    app: trend-app
+  ports:
+    - port: 80
+      targetPort: 3000
