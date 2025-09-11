@@ -43,15 +43,15 @@ pipeline {
       }
     }
     stage('Deploy to Kubernetes') {
-      steps {
-        sh '''
-          kubectl set image deployment/trend-app-deployment trend-app-container=$DOCKERHUB_REPO:$IMAGE_TAG
-          kubectl rollout status deployment/trend-app-deployment
-          kubectl apply -f k8s/trend-deployment.yaml
-          kubectl apply -f k8s/trend-service.yaml
-        '''
-      }
-    }
+  steps {
+    sh '''
+      kubectl apply -f k8s/trend-deployment.yaml
+      kubectl apply -f k8s/trend-service.yaml
+      kubectl set image deployment/trend-app-deployment trend-app-container=$DOCKERHUB_REPO:$IMAGE_TAG
+      kubectl rollout status deployment/trend-app-deployment
+    '''
+  }
+}
   }
   post {
     success {

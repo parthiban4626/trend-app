@@ -1,22 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: trend-react-deployment
-  labels:
-    app: trend-react
+  name: trend-app-deployment  
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: trend-react
+      app: trend-app          
   template:
     metadata:
       labels:
-        app: trend-react
+        app: trend-app      
     spec:
       containers:
-      - name: trend-react
-        image: parthiban46/trend-react-app:latest
+      - name: trend-app-container 
+        image: parthiban46/trend-app:latest
         ports:
         - containerPort: 3000
-
